@@ -174,3 +174,9 @@ You will soon build:
 ✔ Full CNN Training on MNIST
 
 ✔ Visualizing learned filters
+
+## ⭐ 7. Author
+
+Anshu Pandey
+Machine Learning & Deep Learning Learner
+Target — Microsoft AI/ML Internship
