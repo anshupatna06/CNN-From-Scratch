@@ -26,8 +26,37 @@ This repository is your foundation to later build a full CNN from scratch (MNIST
 Using im2col for efficient patch extraction.
 
 Mathematically:
+$$\text{out}[n, f, h, w]$$ = $$\sum_{c=0}^{C-1} \sum_{i=0}^{FH-1} \sum_{j=0}^{FW-1}
+X[n, c, h+i, w+j] \cdot W[f, c, i, j]$$
+
+### 🔹 2. Convolution Backward Pass (From Scratch)
+
+Computes gradients:
+
+Gradient wrt output: dout
+
+Gradient wrt weights:
 
 
+$$dW[f, c, i, j]$$ = $$\sum_{n,h,w} X[n,c,h+i,w+j] \cdot dOut[n,f,h,w]$$
+
+Gradient wrt input:
+
+
+dX = $$\text{col2im}(dX_{col})$$
+
+
+---
+
+### 🔹 3. im2col Implementation
+
+Transforms patches → columns to convert convolution into matrix multiplication.
+
+Visually:
+
+Image (H×W×C)
+  ↓ patches
+im2col → matrix (C*FH*FW , H_out * W_out)
 
 This:
 
@@ -87,6 +116,34 @@ shape transformations
 
 ## ⭐ 4. Key Mathematical Formulas
 🔹 Output Shape of Convolution
+$$H_{out}$$ = $$\frac{H + 2P - FH}{S} + 1$$
+
+$$W_{out}$$ = $$\frac{W + 2P - FW}{S} + 1$$
+
+
+---
+
+🔹 Convolution as Matrix Multiplication
+
+$$X_{col} \in \mathbb{R}^{(C \cdot FH \cdot FW) \times (H_{out} \cdot W_{out})}$$
+
+$$W_{row} \in \mathbb{R}^{F \times (C \cdot FH \cdot FW)}$$
+
+Out = $$W_{row} \cdot X_{col}$$
+
+
+---
+
+🔹 Weight Gradient
+
+dW = $$dOut \cdot X_{col}^{T}$$
+
+
+---
+
+🔹 Input Gradient
+
+dX = $$col2im(W^T \cdot dOut)$$
 ## ⭐ 5. Running the Demo
 pip install -r requirements.txt
 
